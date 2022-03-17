@@ -1,0 +1,2 @@
+language = "java10"
+run = "java StegoLab_Code/Steganography.java"

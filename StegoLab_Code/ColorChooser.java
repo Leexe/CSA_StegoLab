@@ -1,5 +1,3 @@
- 
-
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import java.awt.Color;
@@ -39,5 +37,4 @@ public class ColorChooser {
       Color pickedColor = ColorChooser.pickAColor();
       System.out.println(pickedColor);
    }
-//TESTING LOL
 }
