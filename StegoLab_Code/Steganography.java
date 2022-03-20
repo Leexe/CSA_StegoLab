@@ -7,9 +7,9 @@ public class Steganography
   */
   public static void clearLow( Pixel p )
   {
-    p.setBlue(p.getBlue()*4/4);
-    p.setRed(p.getRed()*4/4);
-    p.setGreen(p.getGreen()*4/4);
+    p.setBlue(p.getBlue()/4*4);
+    p.setRed(p.getRed()/4*4);
+    p.setGreen(p.getGreen()/4*4);
   }
 
   public static Picture testClearLow( Picture picture ) 
@@ -62,7 +62,8 @@ public class Steganography
     Pixel[][] source = hidden.getPixels2D();
     for (int r = 0; r < pixels.length; r++)
     {
-      for (int c = 0; c < pixels[0].length; c++) {
+      for (int c = 0; c < pixels[0].length; c++) 
+      {
         Color col = source[r][c].getColor();
         Pixel pixel = pixels[r][c];
         pixel.setBlue(rightToLeftMath(col.getBlue()));
@@ -76,22 +77,72 @@ public class Steganography
 
   public static int rightToLeftMath(int col)
   {
-    int newColor = col%4*64 + col%64;
+    int newColor = col%4*64; //+ col%64
     return newColor;  
+  }
+
+  /**
+   * Determines if the secret image can fit in source, which if
+   * source nad secret are the same dimensions
+   * @param source is not null
+   * @param secret is not null
+   * @return true if secret can be hidden in source, false otherwise
+   */
+  public static boolean canHide(Picture source, Picture secret)
+  {
+    if (source.getHeight() == secret.getHeight() && source.getWidth() == secret.getWidth()) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Creates a new picture with data from the secret picture
+   * @param source is not null
+   * @param secret is not null
+   * @return combined Picture of source and secret
+   * Precondition: source is the same height and width as secret
+   */
+  public static Picture hidePicture(Picture source, Picture secret) 
+  {
+    Picture newPicture = new Picture(source);
+    Pixel[][] pixels = newPicture.getPixels2D();
+    Pixel[][] secretPixels = secret.getPixels2D();
+
+    try 
+    {
+      for (int r = 0; r < pixels.length; r++)
+      {
+        for (int c = 0; c < pixels[0].length; c++) 
+        {
+          setLow(pixels[r][c], secretPixels[r][c].getColor());
+        }
+      }
+
+      return newPicture;
+    }
+    catch (Exception e)
+    {
+      System.out.println("ERROR: The image you are trying to commbine does not fit!");
+      
+      return newPicture;
+    }
   }
   
   public static void main(String[] args)
   {
     Picture beach = new Picture ("StegoLab_Code/beach.jpg");
-    beach.explore();
-    // Test Clear Low Method:
+    Picture flower1 = new Picture ("StegoLab_Code/flower1.jpg");
+    Picture flower2 = new Picture ("StegoLab_Code/flower2.jpg");
     Picture copy1 = testClearLow(beach);
-    // copy1.explore();
-    // Test Clear Set Method:
     Picture copy2 = testSetLow(beach, Color.PINK);
-    // copy2.explore();
-    // Test Reveal Picture Method:
-    Picture copy3 = revealPicture(copy2);
+    Picture copy3 = hidePicture(flower1, flower2);
+    Picture revealCopy = revealPicture(copy3);
+    flower1.explore();
     copy3.explore();
+    // copy1.explore();
+    // copy2.explore();
+    // copy3.explore();
+    revealCopy.explore();
   }
 }
