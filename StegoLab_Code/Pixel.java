@@ -308,7 +308,6 @@ public class Pixel
     // update the associated picture
     updatePicture(alpha, getRed(), getGreen(), getBlue());
   } 
-  // upload
   
   /**
   * Method to get the distance between this pixel's color and the passed color

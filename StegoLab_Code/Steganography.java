@@ -128,21 +128,54 @@ public class Steganography
       return newPicture;
     }
   }
+
+  /**
+   * 
+   * @param source
+   * @param secret
+   * @param startRow
+   * @param startColumn
+   * @return
+   */
+  public static Picture hidePicture(Picture source, Picture secret, int startRow, int startColumn) 
+  {
+    Picture newPicture = new Picture(source);
+    Pixel[][] pixels = newPicture.getPixels2D();
+    Pixel[][] secretPixels = secret.getPixels2D();
+
+    for (int r = 0; r < secretPixels.length; r++)
+    {
+      for (int c = 0; c < secretPixels[0].length; c++) 
+      {
+        setLow(pixels[r+startColumn][c+startRow], secretPixels[r][c].getColor());
+      }
+    }
+
+    return newPicture;
+  }
   
   public static void main(String[] args)
   {
     Picture beach = new Picture ("StegoLab_Code/beach.jpg");
     Picture flower1 = new Picture ("StegoLab_Code/flower1.jpg");
     Picture flower2 = new Picture ("StegoLab_Code/flower2.jpg");
-    Picture copy1 = testClearLow(beach);
-    Picture copy2 = testSetLow(beach, Color.PINK);
-    Picture copy3 = hidePicture(flower1, flower2);
-    Picture revealCopy = revealPicture(copy3);
-    flower1.explore();
-    copy3.explore();
+    Picture robot = new Picture("StegoLab_Code/robot.jpg");
+
+    // Picture copy1 = testClearLow(beach);
+    // Picture copy2 = testSetLow(beach, Color.PINK);
+    // Picture copy3 = hidePicture(flower1, flower2);
+    // Picture revealCopy = revealPicture(copy3);
+
+    Picture hidden1 = hidePicture(beach, robot, 65, 208);
+    Picture hidden2 = hidePicture(hidden1, flower1, 280, 110);
+    Picture unhidden = revealPicture(hidden2);
+
+    unhidden.explore();
+    // flower1.explore();
+    // copy3.explore();
     // copy1.explore();
     // copy2.explore();
     // copy3.explore();
-    revealCopy.explore();
+    // revealCopy.explore();
   }
 }
