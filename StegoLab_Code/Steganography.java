@@ -289,12 +289,14 @@ public class Steganography
     s = s.toUpperCase();
     String alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     ArrayList<Integer> result = new ArrayList<Integer>();
-    for (int i = 0; i < s.length(); i++){
+    for (int i = 0; i < s.length(); i++)
+    {
       if (s.substring(i,i+1).equals(" "))
       {
         result.add(27);
       }
-      else{
+      else
+      {
         result.add(alpha.indexOf(s.substring(i,i+1))+1);
       } 
     }
@@ -344,6 +346,28 @@ public class Steganography
    return result; 
   }
 
+  /**
+   * Hides a string (must be only capital letters and spaces) in a 
+   * picture
+   * The string will always be in the upper left corner
+   * @param source picture to hide string in
+   * @param s string to hide
+   * @return picture with hidden string
+   */
+  public static void hideText (Picture source, String s)
+  {
+    ArrayList<Integer> encodedStrings = encodeString(s);
+    Pixel[] pixelsList = source.getPixels();
+    
+    for (int x = 0; x < s.length(); x++)
+    {
+      int[] stringBit = getBitPairs(encodedStrings.get(x));
+      pixelsList[x].setRed(stringBit[0]);
+      pixelsList[x].setGreen(stringBit[1]);
+      pixelsList[x].setBlue(stringBit[2]);
+    }
+  }
+  
   public static void main(String[] args)
   {
     Picture beach = new Picture ("StegoLab_Code/beach.jpg");
