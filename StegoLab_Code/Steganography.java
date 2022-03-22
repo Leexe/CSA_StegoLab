@@ -276,14 +276,14 @@ public class Steganography
     return newPicture;
   }
 
-/**
- * Takes a string consisting of letters and spaces and 
- * encodes the string into an arraylist of integers.
- * The integers are 1-26 for A-Z, 27 for space, and 0 for end of string. 
- * The arraylist of integers is returned.
- * @param s string consisting of letters and spaces
- * @return ArrayList containing integer encoding of uppercase version of s
- */
+  /**
+   * Takes a string consisting of letters and spaces and 
+   * encodes the string into an arraylist of integers.
+   * The integers are 1-26 for A-Z, 27 for space, and 0 for end of string. 
+   * The arraylist of integers is returned.
+   * @param s string consisting of letters and spaces
+   * @return ArrayList containing integer encoding of uppercase version of s
+   */
   public static ArrayList<Integer> encodeString(String s)
   {
     s = s.toUpperCase();
@@ -322,28 +322,30 @@ public class Steganography
     }
     return bits;
   }
-/**
- * Returns the string represented by the codes arraylistt.
- * 1-26 = A-Z, 27 = space
- * @param s string to be encoded into numbers
- * @return multiple integers that are the encoded string
- */
- public static String decodeString(ArrayList<Integer> codes)
+  
+  /**
+   * Returns the string represented by the codes arraylistt.
+   * 1-26 = A-Z, 27 = space
+   * @param s string to be encoded into numbers
+   * @return multiple integers that are the encoded string
+   */
+  public static String decodeString(ArrayList<Integer> codes)
   {
     String result= ""; 
     String alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; 
     for (int i=0; i < codes.size(); i++) 
     {
       if (codes.get(i) == 27) 
-    {
-      result = result + " ";
+      {
+        result = result + " ";
+      }
+      else 
+      {
+        result = result + alpha.substring(codes.get(i)-1,codes.get(i)); 
+      }
     }
-    else 
-    {
-      result = result + alpha.substring(codes.get(i)-1,codes.get(i)); 
-    }
-  }
-   return result; 
+
+    return result; 
   }
 
   /**
