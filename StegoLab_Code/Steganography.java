@@ -348,6 +348,18 @@ public class Steganography
     return result; 
   }
 
+/**
+ * returns a string hidden in the picture
+ * @param source picture with hidden string
+ * @return revealed string
+ */
+public static String revealText(Picture source)
+{
+  String end = new String();
+
+  return end;
+}
+
   /**
    * Hides a string (must be only capital letters and spaces) in a 
    * picture
