@@ -326,7 +326,7 @@ public class Steganography
   /**
    * Returns the string represented by the codes arraylistt.
    * 1-26 = A-Z, 27 = space
-   * @param s string to be encoded into numbers
+   * @param codes encoded string
    * @return multiple integers that are the encoded string
    */
   public static String decodeString(ArrayList<Integer> codes)
@@ -356,6 +356,12 @@ public class Steganography
 public static String revealText(Picture source)
 {
   String end = new String();
+  Pixel[] pixelsList = source.getPixels();
+
+  for (int i = 0; i < pixelsList.length; i++)
+  {
+    
+  }
 
   return end;
 }
