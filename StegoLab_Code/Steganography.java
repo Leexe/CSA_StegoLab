@@ -197,10 +197,10 @@ public class Steganography
   }
 
   /**
-   * 
-   * @param image1
-   * @param image2
-   * @return
+   * stores the coordinates of the different pixels between two images in an array list
+   * @param image1 one of the images you are comparing
+   * @param image2 one of the images you are comparing
+   * @return an array list with coordinates
    * precondition: the two images are the same size
    */
   public static ArrayList<Integer[]> findDifferences(Picture image1, Picture image2)
@@ -225,6 +225,24 @@ public class Steganography
 
     return pointList;
   }
+
+  /**
+   * Draws a rectangle around the part of a picture that is different
+   * @param image the original image
+   * @param arrayList list of coords for the different pixels
+   * @return a Picture with a new rectangle 
+   */
+  public static Picture showDifferentArea (Picture image, ArrayList<Integer[]> arrayList)
+  {
+    Picture newPicture = new Picture(image);
+
+    for (Integer[] coords : arrayList) 
+    {
+      newPicture.getPixel(coords[0], coords[1]).setColor(Color.DARK_GRAY);;
+    }
+
+    return newPicture;
+  }
   
   public static void main(String[] args)
   {
@@ -234,8 +252,6 @@ public class Steganography
     Picture robot = new Picture("StegoLab_Code/robot.jpg");
     Picture swan = new Picture("StegoLab_Code/swan.jpg");
     Picture swan2 = new Picture("StegoLab_Code/swan.jpg");
-    Picture arch = new Picture("StegoLab_Code/arch.jpg");
-    Picture koala = new Picture("StegoLab_Code/koala.jpg");
 
     // A1: Tests clearLow, setLow, and hidePicture methods
     // Picture copy1 = testClearLow(beach);
@@ -259,15 +275,28 @@ public class Steganography
     // + isSame(swan, swan2));
 
     // A3: Tests findDifferences method
-    ArrayList<Integer[]> pointList = findDifferences(swan, swan2);
-    System.out.println("PointList after comparing two identical images " 
-    + pointList.size());
-    pointList = findDifferences(swan, koala);
-    System.out.println("PointList after comparing two different sized " 
-    + pointList.size());
-    swan2 = hidePicture(swan, robot, 10, 20);
-    pointList = findDifferences(swan, swan2);
-    System.out.println("PointList after hiding a picture with a size of " 
-    + pointList.size());
+    // ArrayList<Integer[]> pointList = findDifferences(swan, swan2);
+    // System.out.println("PointList after comparing two identical images " 
+    // + pointList.size());
+    // pointList = findDifferences(swan, koala);
+    // System.out.println("PointList after comparing two different sized " 
+    // + pointList.size());
+    // swan2 = hidePicture(swan, robot, 10, 20);
+    // pointList = findDifferences(swan, swan2);
+    // System.out.println("PointList after hiding a picture with a size of " 
+    // + pointList.size());
+
+    // A3: Tests the showDifferentAreas method
+    Picture hall = new Picture("StegoLab_Code/femaleLionAndHall.jpg");
+    Picture hall2 = hidePicture(hall, robot, 50, 300);
+    Picture hall3 = hidePicture(hall2, flower1, 115, 275);
+    hall3.explore();
+    if(!isSame(hall, hall3))
+    {
+      Picture hall4 = showDifferentArea(hall, findDifferences(hall, hall3));
+      hall4.show();
+      Picture unhiddenHall3 = revealPicture(hall3);
+      unhiddenHall3.show();
+    }
   }
 }
