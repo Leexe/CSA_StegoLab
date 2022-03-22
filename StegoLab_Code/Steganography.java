@@ -276,10 +276,18 @@ public class Steganography
     return newPicture;
   }
 
+/**
+ * Takes a string consisting of letters and spaces and 
+ * encodes the string into an arraylist of integers.
+ * The integers are 1-26 for A-Z, 27 for space, and 0 for end of string. 
+ * The arraylist of integers is returned.
+ * @param s string consisting of letters and spaces
+ * @return ArrayList containing integer encoding of uppercase version of s
+ */
   public static ArrayList<Integer> encodeString(String s)
   {
     s = s.toUpperCase();
-    String alpha = "ABCDEEFGHIJKLMNOPQRSTUVWXYZ";
+    String alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     ArrayList<Integer> result = new ArrayList<Integer>();
     for (int i = 0; i < s.length(); i++){
       if (s.substring(i,i+1).equals(" "))
@@ -312,7 +320,12 @@ public class Steganography
     }
     return bits;
   }
-
+/**
+ * Returns the string represented by the codes arraylistt.
+ * 1-26 = A-Z, 27 = space
+ * @param s string to be encoded into numbers
+ * @return multiple integers that are the encoded string
+ */
  public static String decodeString(ArrayList<Integer> codes)
   {
     String result= ""; 
