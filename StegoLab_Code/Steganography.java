@@ -293,6 +293,25 @@ public class Steganography
     result.add(0);
     return result;
   }
+  
+  /**
+   * Give a number from 0 - 63, creates and returns a 3-element
+   * int array consisting of the itegers representing the 
+   * pairs of bits in the number from right to left
+   * @param num number to be broken up
+   * @return bit pairs in number
+   */
+  private static int[] getBitPairs(int num)
+  {
+    int[] bits = new int[3];
+    int code = num;
+    for (int i = 0; i < 3; i++)
+    {
+      bits[i] = code % 4;
+      code = code / 4;
+    }
+    return bits;
+  }
   public static void main(String[] args)
   {
     Picture beach = new Picture ("StegoLab_Code/beach.jpg");
