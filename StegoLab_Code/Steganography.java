@@ -276,25 +276,27 @@ public class Steganography
     return newPicture;
   }
 
-/**
- * Takes a string consisting of letters and spaces and 
- * encodes the string into an arraylist of integers.
- * The integers are 1-26 for A-Z, 27 for space, and 0 for end of string. 
- * The arraylist of integers is returned.
- * @param s string consisting of letters and spaces
- * @return ArrayList containing integer encoding of uppercase version of s
- */
+  /**
+   * Takes a string consisting of letters and spaces and 
+   * encodes the string into an arraylist of integers.
+   * The integers are 1-26 for A-Z, 27 for space, and 0 for end of string. 
+   * The arraylist of integers is returned.
+   * @param s string consisting of letters and spaces
+   * @return ArrayList containing integer encoding of uppercase version of s
+   */
   public static ArrayList<Integer> encodeString(String s)
   {
     s = s.toUpperCase();
     String alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     ArrayList<Integer> result = new ArrayList<Integer>();
-    for (int i = 0; i < s.length(); i++){
+    for (int i = 0; i < s.length(); i++)
+    {
       if (s.substring(i,i+1).equals(" "))
       {
         result.add(27);
       }
-      else{
+      else
+      {
         result.add(alpha.indexOf(s.substring(i,i+1))+1);
       } 
     }
@@ -320,28 +322,30 @@ public class Steganography
     }
     return bits;
   }
-/**
- * Returns the string represented by the codes arraylistt.
- * 1-26 = A-Z, 27 = space
- * @param s string to be encoded into numbers
- * @return multiple integers that are the encoded string
- */
- public static String decodeString(ArrayList<Integer> codes)
+  
+  /**
+   * Returns the string represented by the codes arraylistt.
+   * 1-26 = A-Z, 27 = space
+   * @param s string to be encoded into numbers
+   * @return multiple integers that are the encoded string
+   */
+  public static String decodeString(ArrayList<Integer> codes)
   {
     String result= ""; 
     String alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; 
     for (int i=0; i < codes.size(); i++) 
     {
       if (codes.get(i) == 27) 
-    {
-      result = result + " ";
+      {
+        result = result + " ";
+      }
+      else 
+      {
+        result = result + alpha.substring(codes.get(i)-1,codes.get(i)); 
+      }
     }
-    else 
-    {
-      result = result + alpha.substring(codes.get(i)-1,codes.get(i)); 
-    }
-  }
-   return result; 
+
+    return result; 
   }
 
 /**
@@ -356,6 +360,28 @@ public static String revealText(Picture source)
   return end;
 }
 
+  /**
+   * Hides a string (must be only capital letters and spaces) in a 
+   * picture
+   * The string will always be in the upper left corner
+   * @param source picture to hide string in
+   * @param s string to hide
+   * @return picture with hidden string
+   */
+  public static void hideText (Picture source, String s)
+  {
+    ArrayList<Integer> encodedStrings = encodeString(s);
+    Pixel[] pixelsList = source.getPixels();
+    
+    for (int x = 0; x < s.length(); x++)
+    {
+      int[] stringBit = getBitPairs(encodedStrings.get(x));
+      pixelsList[x].setRed(stringBit[0]);
+      pixelsList[x].setGreen(stringBit[1]);
+      pixelsList[x].setBlue(stringBit[2]);
+    }
+  }
+  
   public static void main(String[] args)
   {
     Picture beach = new Picture ("StegoLab_Code/beach.jpg");
