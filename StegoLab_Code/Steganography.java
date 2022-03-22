@@ -413,16 +413,16 @@ public class Steganography
     // + pointList.size());
 
     // A3: Tests the showDifferentAreas method
-    Picture hall = new Picture("StegoLab_Code/femaleLionAndHall.jpg");
-    Picture hall2 = hidePicture(hall, robot, 50, 300);
-    Picture hall3 = hidePicture(hall2, flower1, 115, 275);
-    hall3.explore();
-    if(!isSame(hall, hall3))
-    {
-      Picture hall4 = showDifferentArea(hall, findDifferences(hall, hall3));
-      hall4.show();
-      Picture unhiddenHall3 = revealPicture(hall3);
-      unhiddenHall3.show();
-    }
+    // Picture hall = new Picture("StegoLab_Code/femaleLionAndHall.jpg");
+    // Picture hall2 = hidePicture(hall, robot, 50, 300);
+    // Picture hall3 = hidePicture(hall2, flower1, 115, 275);
+    // hall3.explore();
+    // if(!isSame(hall, hall3))
+    // {
+    //   Picture hall4 = showDifferentArea(hall, findDifferences(hall, hall3));
+    //   hall4.show();
+    //   Picture unhiddenHall3 = revealPicture(hall3);
+    //   unhiddenHall3.show();
+    // }
   }
 }
