@@ -235,10 +235,42 @@ public class Steganography
   public static Picture showDifferentArea (Picture image, ArrayList<Integer[]> arrayList)
   {
     Picture newPicture = new Picture(image);
+    int minWidth = Integer.MAX_VALUE;
+    int maxWidth = Integer.MIN_VALUE;
+    int minHeight = Integer.MAX_VALUE;
+    int maxHeight = Integer.MIN_VALUE;
 
+    for (Integer[] coords : arrayList)
+    {
+      if(coords[0] < minWidth)
+      {
+        minWidth = coords[0];
+      }
+      if(coords[0] > maxWidth)
+      {
+        maxWidth = coords[0];
+      }
+      if(coords[1] < minHeight)
+      {
+        minHeight = coords[1];
+      }
+      if(coords[1] > maxHeight)
+      {
+        maxHeight = coords[1];
+      }
+    }
+    // Debug:
+    // System.out.println("This is the min x coord:" + minWidth);
+    // System.out.println("This is the max x coord:" + maxWidth);
+    // System.out.println("This is the min y coord:" + minHeight);
+    // System.out.println("This is the max y coord:" + maxHeight);
+    
     for (Integer[] coords : arrayList) 
     {
-      newPicture.getPixel(coords[0], coords[1]).setColor(Color.DARK_GRAY);;
+      if (coords[0] == minWidth || coords[0] == maxWidth || coords[1] == minHeight || coords[1] == maxHeight)
+      {  
+        newPicture.getPixel(coords[0], coords[1]).setColor(Color.RED);
+      }
     }
 
     return newPicture;
