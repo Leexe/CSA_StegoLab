@@ -261,6 +261,25 @@ public class Steganography
     result.add(0);
     return result;
   }
+
+ public static String decodeString(ArrayList<Integer> codes)
+  {
+    String result= ""; 
+    String alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; 
+    for (int i=0; i < codes.size(); i++) 
+    {
+      if (codes.get(i) == 27) 
+    {
+      result = result + " ";
+    }
+    else 
+    {
+      result = result + alpha.substring(codes.get(i)-1,codes.get(i)); 
+    }
+  }
+   return result; 
+  }
+
   public static void main(String[] args)
   {
     Picture beach = new Picture ("StegoLab_Code/beach.jpg");
