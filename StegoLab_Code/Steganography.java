@@ -275,7 +275,24 @@ public class Steganography
 
     return newPicture;
   }
-  
+
+  public static ArrayList<Integer> encodeString(String s)
+  {
+    s = s.toUpperCase();
+    String alpha = "ABCDEEFGHIJKLMNOPQRSTUVWXYZ";
+    ArrayList<Integer> result = new ArrayList<Integer>();
+    for (int i = 0; i < s.length(); i++){
+      if (s.substring(i,i+1).equals(" "))
+      {
+        result.add(27);
+      }
+      else{
+        result.add(alpha.indexOf(s.substring(i,i+1))+1);
+      } 
+    }
+    result.add(0);
+    return result;
+  }
   public static void main(String[] args)
   {
     Picture beach = new Picture ("StegoLab_Code/beach.jpg");
