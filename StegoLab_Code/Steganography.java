@@ -344,6 +344,18 @@ public class Steganography
    return result; 
   }
 
+/**
+ * returns a string hidden in the picture
+ * @param source picture with hidden string
+ * @return revealed string
+ */
+public static String revealText(Picture source)
+{
+  String end = new String();
+
+  return end;
+}
+
   public static void main(String[] args)
   {
     Picture beach = new Picture ("StegoLab_Code/beach.jpg");
