@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class Steganography
 {
   /**
-  * Clear the lower (rightmost) two bits in a pixel, HI TUAN DOES THIS WORk 
+  * Clear the lower (rightmost) two bits in a pixel 
   */
   public static void clearLow( Pixel p )
   {
