@@ -306,7 +306,7 @@ public class Steganography
   
   /**
    * Give a number from 0 - 63, creates and returns a 3-element
-   * int array consisting of the itegers representing the 
+   * int array consisting of the integers representing the 
    * pairs of bits in the number from right to left
    * @param num number to be broken up
    * @return bit pairs in number
@@ -355,9 +355,22 @@ public class Steganography
  */
 public static String revealText(Picture source)
 {
-  String end = new String();
-
-  return end;
+  ArrayList<Integer> hiddenMessage = new ArrayList<Integer>();
+  Boolean end = false;
+  Pixel[] pixelsList = source.getPixels();
+  for (int x = 0; end == false; x++)
+  {
+    int stringValue = pixelsList[x].getRed() % 4 
+                      + pixelsList[x].getGreen() % 4 * 4
+                      + pixelsList[x].getBlue() % 4 * 16;
+    if (stringValue == 0) 
+    {
+      end = true;
+      break;
+    }
+    hiddenMessage.add(stringValue);
+  }
+  return decodeString(hiddenMessage);
 }
 
   /**
@@ -373,12 +386,16 @@ public static String revealText(Picture source)
     ArrayList<Integer> encodedStrings = encodeString(s);
     Pixel[] pixelsList = source.getPixels();
     
-    for (int x = 0; x < s.length(); x++)
+    for (int x = 0; x < encodedStrings.size(); x++)
     {
       int[] stringBit = getBitPairs(encodedStrings.get(x));
-      pixelsList[x].setRed(stringBit[0]);
-      pixelsList[x].setGreen(stringBit[1]);
-      pixelsList[x].setBlue(stringBit[2]);
+      // Debug:
+      // System.out.println("Encoded String Value: " + encodedStrings.get(x));
+      // System.out.println("string bit value: " + stringBit[0] + stringBit[1] + stringBit[2]);
+      clearLow(pixelsList[x]);
+      pixelsList[x].setRed(pixelsList[x].getRed() + stringBit[0]);
+      pixelsList[x].setGreen(pixelsList[x].getGreen() + stringBit[1]);
+      pixelsList[x].setBlue(pixelsList[x].getBlue() + stringBit[2]);
     }
   }
   
@@ -436,5 +453,11 @@ public static String revealText(Picture source)
     //   Picture unhiddenHall3 = revealPicture(hall3);
     //   unhiddenHall3.show();
     // }
+
+    // A4: Tests the revealText and hideText methods
+    String hiddenString = "Hello BOOO";
+    hideText(flower1, hiddenString);
+    flower1.explore();
+    System.out.println("Hidden Text: " + revealText(flower1));
   }
 }
