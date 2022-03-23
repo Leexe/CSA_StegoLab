@@ -326,7 +326,7 @@ public class Steganography
   /**
    * Returns the string represented by the codes arraylistt.
    * 1-26 = A-Z, 27 = space
-   * @param s string to be encoded into numbers
+   * @param codes encoded string
    * @return multiple integers that are the encoded string
    */
   public static String decodeString(ArrayList<Integer> codes)
